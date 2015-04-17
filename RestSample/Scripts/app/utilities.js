@@ -9,17 +9,33 @@ utilities.directive('siteMenu', function () {
 
 utilities.controller('HeaderCtrl', ['$scope', '$location', '$http',
     function ($scope, $location, $http) {                
-        $scope.metadataTypes = [];
-
+        
         $scope.isActive = function (viewLocation) {
             return viewLocation === $location.path();
         };
+    }
+]);
 
-        loadMetadataTypes();
 
-        function loadMetadataTypes() {
-            $scope.metadataTypes.push({ name: "Codes", action: "codes" });
-            $scope.metadataTypes.push({ name: "Date Rules", action: "daterules" });
-        }
+utilities.directive('fundSelector', function () {
+    return {
+        restrict: 'E',
+        templateUrl: './scripts/app/fund.html'
+    };
+});
+
+utilities.controller('FundSelectorCtrl', ['$scope', '$location', '$http', '$rootScope',
+    function ($scope, $location, $http, $rootScope) {
+        $scope.getFunds = function (val) {
+            return $http.get($rootScope.baseUrl + 'api/core/fund/startsWith', {
+                params: {
+                    startsWith: val
+                }
+            }).then(function (response) {
+                return response.data;
+            });
+
+        };
+        
     }
 ]);

@@ -1,6 +1,6 @@
 ﻿eagleRest.controller('HoldingCtrl',
-    ['$scope', '$http',
-    function ($scope, $http) {        
+    ['$scope', '$http', '$rootScope',
+    function ($scope, $http, $rootScope) {        
         $scope.gridOptions = {
             rowHeight: 30, // set row height, this is default size
             enableSorting: true,
@@ -11,14 +11,16 @@
         $scope.dataLoading = false;
         $scope.effectiveDate = "CURRENT";
 
+        $scope.queryName = 'holdings';
+
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
 
-        $scope.open = function ($event) {
+        $scope.openDates = function ($event) {
             $event.preventDefault();
             $event.stopPropagation();
 
-            $scope.opened = true;
+            $scope.datesOpened = true;
         };
 
         $scope.getTableHeight = function () {            
@@ -29,7 +31,7 @@
         
         $scope.run = function () {
             $scope.dataLoading = true;
-            $http.get('http://kmcnamee300/eagle.rest/api/portal/query/run/holdings?entity_id=' + $scope.fund.ID + '&effective_date=' + $scope.effectiveDate) //1520
+            $http.get($rootScope.baseUrl + 'api/portal/query/run/' + $scope.queryName + '?entity_id=' + $scope.fund.ID + '&effective_date=' + $scope.effectiveDate)
             .success(function (results) {
                 console.log(results);
                 for (var i = 0 ; i < results.Fields.length; i++) {
@@ -50,7 +52,7 @@
         }
 
         $scope.getFunds = function (val) {
-            return $http.get('http://kmcnamee300/eagle.rest/api/core/fund/startsWith', {
+            return $http.get($rootScope.baseUrl + 'api/core/fund/startsWith', {
                 params: {
                     startsWith: val                    
                 }

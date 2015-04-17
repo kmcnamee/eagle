@@ -11,7 +11,7 @@ angular.module('authentication', [])
 
             /* Use this for real authentication
              ----------------------------------------------*/
-            $http.post('http://localhost/eagle.rest/api/authenticate', { username: username, password: password })
+            $http.post($rootScope.baseUrl + 'api/authenticate', { username: username, password: password })
                 .success(function (response) {
                     callback(response);
                 });
