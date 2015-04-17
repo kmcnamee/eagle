@@ -4,8 +4,10 @@
       'self',
       // Allow loading from outer templates domain.
       'http://kmcnamee/**'
-    ]);
+    ]);   
 });
+
+
 
 
 // Configure routes
@@ -23,6 +25,7 @@ eagleRest.config(['$routeProvider', function ($routeProvider) {
 eagleRest.run(['$rootScope', '$location', '$cookieStore', '$http',
     function ($rootScope, $location, $cookieStore, $http) {
         // keep user logged in after page refresh
+        $rootScope.baseUrl = 'http://localhost/eagle.rest/';
         $rootScope.globals = $cookieStore.get('globals') || {};
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['EagleSessionID'] =  $rootScope.globals.currentUser.sessionId; // jshint ignore:line
