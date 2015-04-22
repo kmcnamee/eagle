@@ -1,4 +1,4 @@
-﻿window.utilities = angular.module('utilities', [])
+﻿window.utilities = angular.module('utilities', ['ui.bootstrap'])
 
 utilities.directive('siteMenu', function () {
     return {
@@ -16,26 +16,27 @@ utilities.controller('HeaderCtrl', ['$scope', '$location', '$http',
     }
 ]);
 
-
 utilities.directive('fundSelector', function () {
     return {
         restrict: 'E',
-        templateUrl: './scripts/app/fund.html'
+        scope: {
+            fund: '='
+        },
+        controller: function ($scope,$http,$rootScope) {
+
+            $scope.getFunds = function (val) {                
+                 return $http.get($rootScope.baseUrl + 'api/core/fund/startsWith', {
+                     params: {
+                         startsWith: val
+                     }
+                 }).then(function (response) {
+                     return response.data;
+                 });
+                 
+            };
+        },
+        template: '<input type="text" ng-model="fund" placeholder="Portfolio" typeahead="fund as fund.Name for fund in getFunds($viewValue)" typeahead-loading="loadingLocations" class="form-control"  >' +
+                    '<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>'             
     };
 });
 
-utilities.controller('FundSelectorCtrl', ['$scope', '$location', '$http', '$rootScope',
-    function ($scope, $location, $http, $rootScope) {
-        $scope.getFunds = function (val) {
-            return $http.get($rootScope.baseUrl + 'api/core/fund/startsWith', {
-                params: {
-                    startsWith: val
-                }
-            }).then(function (response) {
-                return response.data;
-            });
-
-        };
-        
-    }
-]);

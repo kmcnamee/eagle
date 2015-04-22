@@ -31,7 +31,7 @@
         
         $scope.run = function () {
             $scope.dataLoading = true;
-            $http.get($rootScope.baseUrl + 'api/portal/query/run/' + $scope.queryName + '?entity_id=' + $scope.fund.ID + '&effective_date=' + $scope.effectiveDate)
+            $http.get($rootScope.baseUrl + 'api/portal/query/run/' + $scope.queryName + '?ENTITY_ID=' + $scope.selectedFund.ID + '&EFFECTIVE_DATE=' + $scope.effectiveDate)
             .success(function (results) {
                 console.log(results);
                 for (var i = 0 ; i < results.Fields.length; i++) {

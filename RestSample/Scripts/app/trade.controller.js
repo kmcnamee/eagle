@@ -11,6 +11,7 @@
         $scope.dataLoading = false;
         $scope.startDate = "CURRENT";
         $scope.endDate = "CURRENT";
+        
 
         $scope.queryName = "TRADES";
 
@@ -30,9 +31,9 @@
             };
         };
 
-        $scope.run = function () {
+        $scope.run = function () {            
             $scope.dataLoading = true;
-            $http.get($rootScope.baseUrl + 'api/portal/query/run/' + $scope.queryName + '?entity_id=' + $scope.fund.ID + '&start_date=' + $scope.startDate + '&start_date=' + $scope.endDate)
+            $http.get($rootScope.baseUrl + 'api/portal/query/run/' + $scope.queryName + '?ENTITY_ID=' + $scope.selectedFund.ID + '&FROM_EFFECTIVE_DATE=' + $scope.startDate + '&TO_EFFECTIVE_DATE=' + $scope.endDate)
             .success(function (results) {
                 console.log(results);
                 for (var i = 0 ; i < results.Fields.length; i++) {

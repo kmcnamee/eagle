@@ -1,8 +1,7 @@
 ﻿<div class="container-fluid">
-    <form name="form" ng-submit="run()" role="form">
+    <form name="inputForm" ng-submit="run()" role="form">
         <div class="col-md-4">
-            <input type="text" ng-model="fund" placeholder="Portfolio" typeahead="fund as fund.Name for fund in getFunds($viewValue)" typeahead-loading="loadingLocations" class="form-control">
-            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+            <fund-selector fund="selectedFund"></fund-selector>
         </div>
         <div class="col-md-2">
             <p class="input-group">
@@ -21,7 +20,7 @@
             </p>
         </div>
         <div class="col-md-4">
-            <button type="submit" ng-disabled="dataLoading" class="btn btn-danger">Go!</button>
+            <button type="submit" class="btn btn-danger" ng-disabled="dataLoading">Go!</button>
         </div>
     </form>
     <div class="col-md-12">
